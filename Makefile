@@ -7,6 +7,9 @@ run : ; ./mvnw clean spring-boot:run
 .PHONY: install
 install : ; ./mvnw clean install
 
+.PHONY: mutation
+mutation : ; ./mvnw org.pitest:pitest-maven:mutationCoverage
+
 # .PHONY: acceptance-test-java
 # acceptance-test-java : ; ./mvnw clean verify -Dtest=RunAcceptanceTest
 #
