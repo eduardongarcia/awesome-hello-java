@@ -20,20 +20,30 @@ class ExampleControllerSpec extends Specification {
     @SpringBean
     GetExample getExample = Mock()
 
-    def "request succes for /api/v1/examples"() {
+//    Mocking and stubbing of the same method call has to happen in the same interaction.
+//    http://spockframework.org/spock/docs/1.3/all_in_one.html#_combining_mocking_and_stubbing
+    def "request success for /api/v1/examples"() {
         given: "usecase GetExample return valid data"
         getExample.execute() >> 'hello world'
 
         when: "request example api"
         def result = mvc.perform(MockMvcRequestBuilders.get("/api/v1/examples"))
 
-        then: "usecase should called once"
-        1 * getExample.execute()
-
-        and: "response should be OK"
+        then: "response should be OK"
         result
                 .andExpect(status().isOk())
                 .andExpect(content().string("hello world"))
+
+//        and: "usecase should called once"
+//        1 * getExample.execute()
+    }
+
+    def "request for /api/v1/examples should call usecase propertily"() {
+        when: "request example api"
+        def result = mvc.perform(MockMvcRequestBuilders.get("/api/v1/examples"))
+
+        then: "response should be OK"
+        1 * getExample.execute()
     }
 
 }
