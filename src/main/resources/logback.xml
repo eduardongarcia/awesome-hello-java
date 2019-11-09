@@ -1,0 +1,84 @@
+<configuration debug="true">
+    <property name="LOG_FILE" value="application"/>
+    <property name="LOG_PATH" value="${LOG_PATH:-${LOG_TEMP:-${java.io.tmpdir:-/tmp/awesomehello}}}"/>
+    <springProperty scope="context" name="spring.application.name" source="spring.application.name"/>
+    <springProperty scope="context" name="spring.profiles.active" source="spring.profiles.active"/>
+    <springProperty scope="context" name="spring.application.version" source="spring.application.version"/>
+    <springProperty scope="context" name="logging.graylog.host" source="logging.graylog.host"/>
+    <springProperty scope="context" name="logging.graylog.port" source="logging.graylog.port"/>
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%date{yyyy-MM-dd HH:mm:ss.SSS} | %level | ${spring.application.name:-} | ${HOSTNAME} | %thread | %logger{35} | [TID=%X{X-B3-TraceId:-}];[SID=%X{X-B3-SpanId:-}] | %.-2000msg%n%ex{full}
+            </pattern>
+        </encoder>
+    </appender>
+
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_PATH}/${LOG_FILE}-${HOSTNAME}.log</file>
+        <append>true</append>
+        <encoder>
+            <pattern>%date{yyyy-MM-dd HH:mm:ss.SSS} | %level | ${spring.application.name:-} | ${HOSTNAME} | %thread | %logger{35} | [TID=%X{X-B3-TraceId:-}];[SID=%X{X-B3-SpanId:-}] | %.-2000msg%n%ex{full}
+            </pattern>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_PATH}/${LOG_FILE}-${HOSTNAME}.%d{yyyy-MM-dd}.%i.gz</fileNamePattern>
+            <maxHistory>15</maxHistory>
+            <maxFileSize>10MB</maxFileSize>
+        </rollingPolicy>
+    </appender>
+
+    <if condition='isDefined("logging.graylog.host")'>
+        <then>
+            <appender name="DEFAULT_GRAYLOG_UDP_APPENDER" class="me.moocar.logbackgelf.GelfUDPAppender">
+                <remoteHost>${logging.graylog.host}</remoteHost>
+                <port>${logging.graylog.port}</port>
+                <encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
+                    <providers>
+                        <loggerName/>
+                        <threadName/>
+                        <message/>
+                        <arguments/>
+                        <version/>
+                        <stackTrace/>
+                        <pattern>
+                            <pattern>
+                                {
+                                "logLevel": "%level",
+                                "facility": "GELF",
+                                "source": "${HOSTNAME}",
+                                "host": "${HOSTNAME}",
+                                "app_env": "${spring.profiles.active}",
+                                "application_name": "${spring.application.name}",
+                                "app_version": "${spring.application.version}",
+                                "trace": "%X{X-B3-TraceId:-}",
+                                "span": "%X{X-B3-SpanId:-}"
+                                }
+                            </pattern>
+                        </pattern>
+                    </providers>
+                </encoder>
+            </appender>
+        </then>
+    </if>
+
+    <root level="INFO">
+        <appender-ref ref="FILE"/>
+        <appender-ref ref="STDOUT"/>
+        <if condition='isDefined("logging.graylog.host")'>
+            <then>
+                <appender-ref ref="DEFAULT_GRAYLOG_UDP_APPENDER"/>
+            </then>
+        </if>
+    </root>
+
+    <logger name="br.com.awesomehello" additivity="false">
+        <appender-ref ref="FILE"/>
+        <appender-ref ref="STDOUT"/>
+        <if condition='isDefined("logging.graylog.host")'>
+            <then>
+                <appender-ref ref="DEFAULT_GRAYLOG_UDP_APPENDER"/>
+            </then>
+        </if>
+    </logger>
+</configuration>

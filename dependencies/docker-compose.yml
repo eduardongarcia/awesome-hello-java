@@ -1,0 +1,31 @@
+version: "3.3"
+services:
+  mysql:
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: "root"
+      MYSQL_DATABASE: "db_example"
+    volumes:
+      - ./mysql/data:/var/lib/mysql
+      - ./mysql/init:/docker-entrypoint-initdb.d
+    ports:
+      - 3306:3306
+  owasp:
+    build: ./owasp/
+    ports:
+      - 8090:8090
+    volumes:
+      - ./../src/security-test/target/security-session:/tmp/security-session
+      - ./../src/security-test/resources/policy:/tmp/policy
+    command: zap.sh -daemon -host 0.0.0.0 -port 8090 -config api.disablekey=true -config database.recoverylog=false -config connection.timeoutInSecs=120 -config api.addrs.addr.name=.* -config api.addrs.addr.regex=true
+  app:
+    image: openjdk:8-jdk-alpine
+    depends_on:
+      - mysql
+    ports:
+      - 8080:8080
+    volumes:
+      - ./../target/awesome-hello.jar:/app.jar
+    environment:
+      - MYSQL_HOST:mysql
+    command: java -Xms512m -Xmx512m -Djava.security.egd=file:/dev/./urandom -jar /app.jar

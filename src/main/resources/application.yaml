@@ -1,3 +1,33 @@
+info:
+  app:
+    name: '@project.name@'
+    version: '@project.version@'
+    description: '@project.description@'
+
+spring:
+  application:
+    name: '@project.name@'
+    version: '@project.version@'
+    description: '@project.description@'
+  profiles:
+    active: local
+#  jpa:
+#    hibernate:
+#      ddl-auto: update
+  datasource:
+    url: jdbc:mysql://${MYSQL_HOST:localhost}:3306/db_example
+    username: root
+    password: root
+  cloud:
+    discovery:
+      client:
+        health-indicator:
+          enabled: false
+server:
+  port: 8080
+  http2:
+    enabled: true
+
 # Actuator Endpoints Settings
 management:
   endpoints:
@@ -7,3 +37,4 @@ management:
   endpoint:
     health:
       show-details: ALWAYS
+
