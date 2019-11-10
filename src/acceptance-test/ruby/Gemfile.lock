@@ -81,6 +81,7 @@ DEPENDENCIES
   byebug
   cucumber
   httparty
+  json
   rspec
   rubocop
   tshield

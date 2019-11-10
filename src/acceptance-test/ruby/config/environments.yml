@@ -1,7 +1,11 @@
 ---
 local: &defaults
-  api:
+  services:
     example:
-      url: http://localhost:8080
+      protocol: http
+      host: localhost
+      port: 8080
   tshield:
     sessions_url: http://localhost:4567/sessions
+  api:
+    health_url: http://localhost:8080/actuator/health

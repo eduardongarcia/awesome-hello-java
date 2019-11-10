@@ -33,3 +33,6 @@ build/
 
 ### Docker ####
 /dependencies/mysql/data/
+
+### Others ###
+/java-run.PID
