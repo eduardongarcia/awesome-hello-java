@@ -15,7 +15,7 @@ class GetExampleSpec extends Specification {
         def result = getExample.execute()
 
         then: "get a valid response"
-        result == ""
+        result == "hello"
 
     }
 

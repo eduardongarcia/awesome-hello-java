@@ -26,6 +26,8 @@
 		<gmavenplus.plugin.version>1.8.0</gmavenplus.plugin.version>
 		<pitest.version>1.4.10</pitest.version>
         <jacoco.maven.plugin.version>0.8.5</jacoco.maven.plugin.version>
+		<cucumber-version>4.7.2</cucumber-version>
+		<build-helper-maven-plugin.version>3.0.0</build-helper-maven-plugin.version>
 		<skip.unit.tests>false</skip.unit.tests>
 		<skip.integration.tests>true</skip.integration.tests>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -82,6 +84,24 @@
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
 			<version>${h2.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>io.cucumber</groupId>
+			<artifactId>cucumber-java</artifactId>
+			<version>${cucumber-version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>io.cucumber</groupId>
+			<artifactId>cucumber-junit</artifactId>
+			<version>${cucumber-version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>io.cucumber</groupId>
+			<artifactId>cucumber-spring</artifactId>
+			<version>${cucumber-version}</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
@@ -145,8 +165,6 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
             <plugin>
-                <!-- The gmavenplus plugin is used to compile Groovy code. To learn more about this plugin,
-                visit https://github.com/groovy/GMavenPlus/wiki -->
                 <groupId>org.codehaus.gmavenplus</groupId>
                 <artifactId>gmavenplus-plugin</artifactId>
                 <version>${gmavenplus.plugin.version}</version>
@@ -190,6 +208,40 @@
 						<goals>
 							<goal>report</goal>
 						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>build-helper-maven-plugin</artifactId>
+				<version>${build-helper-maven-plugin.version}</version>
+				<executions>
+					<execution>
+						<id>add-acceptance-test-source</id>
+						<phase>generate-test-sources</phase>
+						<goals>
+							<goal>add-test-source</goal>
+						</goals>
+						<configuration>
+							<sources>
+								<source>src/acceptance-test/java</source>
+							</sources>
+						</configuration>
+					</execution>
+					<execution>
+						<id>add-acceptance-test-resource</id>
+						<phase>generate-test-resources</phase>
+						<goals>
+							<goal>add-test-resource</goal>
+						</goals>
+						<configuration>
+							<resources>
+								<resource>
+									<directory>src/acceptance-test/resources</directory>
+								</resource>
+							</resources>
+						</configuration>
 					</execution>
 				</executions>
 			</plugin>

@@ -7,6 +7,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class GetExample {
     public String execute() {
-        return "";
+        return "hello";
     }
 }
