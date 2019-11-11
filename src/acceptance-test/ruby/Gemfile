@@ -5,6 +5,7 @@ gem 'httparty'
 gem 'rspec'
 gem 'tshield'
 gem 'json'
+gem 'reportportal', git: 'https://github.com/reportportal/agent-ruby.git'
 
 group :development do
   gem 'byebug'

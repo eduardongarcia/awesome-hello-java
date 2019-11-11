@@ -1,0 +1,5 @@
+uuid: 31aa8b42-e072-4bfc-a820-cddb6f5c8434
+endpoint: http://localhost:8088/api/v1
+project: default_personal
+launch: default_TEST_EXAMPLE_RUBY
+#tags: [tag1, tag2]

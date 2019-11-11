@@ -1,4 +1,4 @@
-class RestClient
+class RestClientWrapper
   include HTTParty
 
   def initialize(name)

@@ -1,14 +1,14 @@
 # frozen_string_literal: true
 
 require 'json'
-require 'tshield'
-require 'tshield/options'
+# require 'tshield'
+# require 'tshield/options'
 
 class Mock
 
   def init_tshield
-    TShield::Options.init(skip_parse: true)
-    Thread.new { TShield::Server.run! }
+    # TShield::Options.init(skip_parse: true)
+    # Thread.new { TShield::Server.run! }
     wait_for_tshield
     wait_for_app
   end

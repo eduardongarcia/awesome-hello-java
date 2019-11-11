@@ -10,7 +10,7 @@ Quando('o serviço {string} é chamado') do |endpoint|
   # @request_options[:headers] = { xxx: '123' }
   # @path = "/api/v1/servico/#{@params['param1']}/detail?filtro=#{@params['param2']}&limit=#{@params['limit']}&offset=#{@params['offset']}"
   @path = endpoint
-  @response = RestClient.new('example').send('get', @path, @request_options)
+  @response = RestClientWrapper.new('example').send('get', @path, @request_options)
 end
 
 Entao('o status da resposta é {string}') do |status|
