@@ -4,6 +4,12 @@ deps-up : ; docker-compose -f dependencies/docker-compose.yml up -d --build --fo
 .PHONY: deps-down
 deps-down : ; docker-compose -f dependencies/docker-compose.yml down
 
+.PHONY: reportportal-up
+reportportal-up : ; docker-compose -p reportportal -f dependencies/reportportal/docker-compose.yml up -d --force-recreate
+
+.PHONY: reportportal-down
+reportportal-down : ; docker-compose -p reportportal -f dependencies/reportportal/docker-compose.yml down
+
 .PHONY: run
 run : ; ./mvnw clean spring-boot:run
 

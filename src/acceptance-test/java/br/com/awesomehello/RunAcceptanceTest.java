@@ -6,7 +6,7 @@ import org.junit.runner.RunWith;
 
 @RunWith(Cucumber.class)
 @CucumberOptions(
-        plugin = {"pretty", "json:target/jsonReports/cucumber.json"},
+        plugin = {"pretty", "json:target/jsonReports/cucumber.json", "com.epam.reportportal.cucumber.ScenarioReporter"},
         features = {"src/acceptance-test/resources/features"},
         glue = "br.com.awesomehello.steps",
         tags = {"not @wip"})

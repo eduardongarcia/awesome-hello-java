@@ -33,6 +33,7 @@ build/
 
 ### Docker ####
 /dependencies/mysql/data/
+/dependencies/reportportal/data/
 
 ### Others ###
 /java-run.PID
