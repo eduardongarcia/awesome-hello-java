@@ -5,6 +5,8 @@
     - Banco relacional (MySQL)
     - Banco não relacional (Mongo)
     - Consumo de API rest
+    - Consumo de API soap
+    - Fila
 - Poc com Liquibase
 - Testes unitários com spock
 - Testes de aceitação com cucumber + java
