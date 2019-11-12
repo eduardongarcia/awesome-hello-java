@@ -147,6 +147,7 @@
             <groupId>com.epam.reportportal</groupId>
             <artifactId>agent-java-cucumber4</artifactId>
             <version>5.0.0-BETA-1</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 
