@@ -1,4 +1,4 @@
-package br.com.awesomehello.steps;
+package br.com.awesomehello.context;
 
 import br.com.awesomehello.AwesomeHelloApplication;
 import io.cucumber.java.Before;
