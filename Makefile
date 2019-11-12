@@ -26,7 +26,14 @@ mutation : ; ./mvnw org.pitest:pitest-maven:mutationCoverage
 acceptance-test-java : ; ./mvnw clean verify -Dtest=RunAcceptanceTest
 
 .PHONY: acceptance-test-ruby
-acceptance-test-ruby: deps-up run-jar; cd src/acceptance-test/ruby; cucumber -f ReportPortal::Cucumber::Formatter; cd ../../../; kill -TERM $$(cat java-run.PID) || true; $(MAKE) deps-down;
+acceptance-test-ruby: deps-up run-jar; \
+    cd src/acceptance-test/ruby; \
+    tshield & echo $$! > tshield-run.PID; \
+    cucumber -f pretty -f html -o reports.html -f ReportPortal::Cucumber::Formatter -o report_portal; \
+    kill -TERM $$(cat tshield-run.PID) || true; \
+    cd ../../../; \
+    kill -TERM $$(cat java-run.PID) || true; \
+    $(MAKE) deps-down;
 
 # .PHONY: security-test
 # security-test : ; cd src/security-test; ./mvnw clean verify -Dtest=RunSecurityTest

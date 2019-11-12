@@ -37,3 +37,5 @@ build/
 
 ### Others ###
 /java-run.PID
+/src/acceptance-test/ruby/reports.html
+/src/acceptance-test/ruby/tshield-run.PID
