@@ -35,8 +35,8 @@ acceptance-test-ruby: deps-up run-jar; \
     kill -TERM $$(cat java-run.PID) || true; \
     $(MAKE) deps-down;
 
-# .PHONY: security-test
-# security-test : ; cd src/security-test; ./mvnw clean verify -Dtest=RunSecurityTest
-#
+.PHONY: security-test
+security-test : ; cd src/security-test; mvn clean verify -Dtest=RunSecurityTest
+
 # .PHONY: performance-test
 # performance-test : ; cd src/performance-test; ./mvnw clean verify

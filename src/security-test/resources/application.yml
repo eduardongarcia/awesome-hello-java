@@ -1,0 +1,12 @@
+target:
+  url: http://app:8080
+
+dependencies:
+  owasp:
+    overwriteDataFolder: /tmp/
+
+spring:
+  datasource:
+    url: jdbc:mysql://${MYSQL_HOST:localhost}:3306/db_example
+    username: root
+    password: root

@@ -11,9 +11,9 @@ spring:
     description: '@project.description@'
   profiles:
     active: local
-#  jpa:
-#    hibernate:
-#      ddl-auto: update
+  #  jpa:
+  #    hibernate:
+  #      ddl-auto: update
   datasource:
     url: jdbc:mysql://${MYSQL_HOST:localhost}:3306/db_example
     username: root
@@ -30,6 +30,9 @@ server:
 
 # Actuator Endpoints Settings
 management:
+  health:
+    db:
+      enabled: false
   endpoints:
     web:
       exposure:
@@ -37,4 +40,3 @@ management:
   endpoint:
     health:
       show-details: ALWAYS
-
