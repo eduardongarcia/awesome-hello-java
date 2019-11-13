@@ -96,7 +96,7 @@
                 </executions>
                 <configuration>
                     <poll>
-                        <attempts>20</attempts>
+                        <attempts>50</attempts>
                         <sleep>5000</sleep>
                     </poll>
                     <httpConnections>
