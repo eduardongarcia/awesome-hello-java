@@ -16,6 +16,9 @@ target/
 
 ### IntelliJ IDEA ###
 .idea
+!/.idea
+/.idea/*
+!/.idea/saveactions_settings.xml
 *.iws
 *.iml
 *.ipr

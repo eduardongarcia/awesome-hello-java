@@ -22,39 +22,40 @@ public class ExampleSteps {
 
     @Quando("o cliente chama {string}")
     public void performGetRequest(final String endpoint) {
-        doGet(endpoint);
+        this.doGet(endpoint);
     }
 
     @Entao("o cliente recebe status {string}")
     public void checkResultStatusCode(final String status) {
-        assertEquals(HttpStatus.valueOf(status), httpStatus);
+        assertEquals(HttpStatus.valueOf(status), this.httpStatus);
     }
 
     @E("o cliente recebe {string}")
     public void checkResultValue(final String value) {
-        assertEquals(value, result);
+        assertEquals(value, this.result);
     }
 
     private void doGet(final String endpoint) {
-        clean();
+        this.clean();
         final String url = "http://localhost:8080" + endpoint;
 
         final RestTemplate restTemplate = new RestTemplate();
         try {
             final ResponseEntity<String> response = restTemplate.getForEntity(url,
                     String.class);
-            result = response.getBody();
-            httpStatus = response.getStatusCode();
-            httpHeaders = response.getHeaders();
+            this.result = response.getBody();
+            this.httpStatus = response.getStatusCode();
+            this.httpHeaders = response.getHeaders();
         } catch (final HttpClientErrorException e) {
-            error = e;
+            this.error = e;
         }
     }
 
     private void clean() {
-        result = null;
-        error = null;
-        httpStatus = null;
-        httpHeaders = null;
+        this.result = null;
+        this.error = null;
+        this.httpStatus = null;
+        this.httpHeaders = null;
     }
+
 }
